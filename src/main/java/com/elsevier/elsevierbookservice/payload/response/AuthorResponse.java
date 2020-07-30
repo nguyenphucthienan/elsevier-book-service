@@ -10,7 +10,6 @@ public class AuthorResponse {
   private String title;
   private String email;
   private String address;
-  private Long likes;
 
   public UUID getId() {
     return id;
@@ -58,13 +57,5 @@ public class AuthorResponse {
 
   public void setAddress(String address) {
     this.address = address;
-  }
-
-  public Long getLikes() {
-    return likes;
-  }
-
-  public void setLikes(Long likes) {
-    this.likes = likes;
   }
 }
