@@ -6,9 +6,14 @@ import com.elsevier.elsevierbookservice.service.AuthorService;
 import com.elsevier.elsevierbookservice.service.BookService;
 import com.elsevier.elsevierbookservice.shared.dto.AuthorDto;
 import com.elsevier.elsevierbookservice.shared.dto.BookDto;
+import com.elsevier.elsevierbookservice.utils.PagedResponse;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +33,23 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
+  public PagedResponse<BookDto> getBooks(Pageable pageable) {
+    Page<Book> bookPage = bookRepository.findAll(pageable);
+
+    List<BookDto> bookDtos =
+        modelMapper.map(bookPage.getContent(), new TypeToken<List<BookDto>>() {}.getType());
+
+    return new PagedResponse<>(
+        bookDtos,
+        bookPage.getNumber(),
+        bookPage.getSize(),
+        bookPage.getTotalElements(),
+        bookPage.getTotalPages(),
+        bookPage.isFirst(),
+        bookPage.isLast());
+  }
+
+  @Override
   public BookDto getBookById(UUID id) {
     Book book =
         bookRepository
@@ -35,7 +57,7 @@ public class BookServiceImpl implements BookService {
             .orElseThrow(() -> new RuntimeException("Book with ID " + id + " not found"));
 
     AuthorDto authorDto = authorService.getAuthor(book.getAuthorId());
-    BookDto bookDto =  modelMapper.map(book, BookDto.class);
+    BookDto bookDto = modelMapper.map(book, BookDto.class);
     bookDto.setAuthor(authorDto);
     return bookDto;
   }
