@@ -19,7 +19,7 @@ public class InventoryServiceFeignClientImpl implements InventoryService {
   @Override
   public Long getInventoryQuantityByBookId(UUID bookId) {
     return Objects.requireNonNull(
-            inventoryServiceFeignClient.getBookInventoryQuantityById(bookId).getBody())
+            inventoryServiceFeignClient.getInventoryQuantityByBookId(bookId).getBody())
         .getQuantity();
   }
 }

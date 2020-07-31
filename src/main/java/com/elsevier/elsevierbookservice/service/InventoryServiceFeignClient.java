@@ -13,6 +13,6 @@ import java.util.UUID;
 public interface InventoryServiceFeignClient {
 
   @RequestMapping(method = RequestMethod.GET, value = "/api/books/{bookId}/inventories")
-  ResponseEntity<InventoryQuantityResponse> getBookInventoryQuantityById(
+  ResponseEntity<InventoryQuantityResponse> getInventoryQuantityByBookId(
       @PathVariable("bookId") UUID bookId);
 }
