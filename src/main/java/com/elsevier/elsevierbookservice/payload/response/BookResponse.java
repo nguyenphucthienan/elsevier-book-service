@@ -7,7 +7,7 @@ public class BookResponse {
   private UUID id;
   private String title;
   private String isbn;
-  private AuthorResponse author;
+  private UUID authorId;
   private String description;
   private Long price;
 
@@ -33,14 +33,6 @@ public class BookResponse {
 
   public void setIsbn(String isbn) {
     this.isbn = isbn;
-  }
-
-  public AuthorResponse getAuthor() {
-    return author;
-  }
-
-  public void setAuthor(AuthorResponse author) {
-    this.author = author;
   }
 
   public String getDescription() {

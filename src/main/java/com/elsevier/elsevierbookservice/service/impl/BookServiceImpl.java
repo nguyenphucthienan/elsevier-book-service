@@ -4,6 +4,7 @@ import com.elsevier.elsevierbookservice.domain.Book;
 import com.elsevier.elsevierbookservice.repository.BookRepository;
 import com.elsevier.elsevierbookservice.service.AuthorService;
 import com.elsevier.elsevierbookservice.service.BookService;
+import com.elsevier.elsevierbookservice.service.InventoryService;
 import com.elsevier.elsevierbookservice.shared.dto.AuthorDto;
 import com.elsevier.elsevierbookservice.shared.dto.BookDto;
 import com.elsevier.elsevierbookservice.utils.PagedResponse;
@@ -23,12 +24,18 @@ public class BookServiceImpl implements BookService {
 
   private final AuthorService authorService;
 
+  private final InventoryService inventoryService;
+
   private final ModelMapper modelMapper;
 
   public BookServiceImpl(
-      BookRepository bookRepository, AuthorService authorService, ModelMapper modelMapper) {
+      BookRepository bookRepository,
+      AuthorService authorService,
+      InventoryService inventoryService,
+      ModelMapper modelMapper) {
     this.bookRepository = bookRepository;
     this.authorService = authorService;
+    this.inventoryService = inventoryService;
     this.modelMapper = modelMapper;
   }
 
@@ -59,6 +66,10 @@ public class BookServiceImpl implements BookService {
     AuthorDto authorDto = authorService.getAuthor(book.getAuthorId());
     BookDto bookDto = modelMapper.map(book, BookDto.class);
     bookDto.setAuthor(authorDto);
+
+    Long inventoryTotalQuantity = inventoryService.getInventoryQuantityByBookId(book.getId());
+    bookDto.setQuantity(inventoryTotalQuantity);
+
     return bookDto;
   }
 

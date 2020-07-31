@@ -1,13 +1,13 @@
-package com.elsevier.elsevierbookservice.shared.dto;
+package com.elsevier.elsevierbookservice.payload.response;
 
 import java.util.UUID;
 
-public class BookDto {
+public class BookDetailResponse {
 
   private UUID id;
   private String title;
   private String isbn;
-  private AuthorDto author;
+  private AuthorResponse author;
   private String description;
   private Long price;
   private Long quantity = 0L;
@@ -36,11 +36,11 @@ public class BookDto {
     this.isbn = isbn;
   }
 
-  public AuthorDto getAuthor() {
+  public AuthorResponse getAuthor() {
     return author;
   }
 
-  public void setAuthor(AuthorDto author) {
+  public void setAuthor(AuthorResponse author) {
     this.author = author;
   }
 

@@ -1,6 +1,7 @@
 package com.elsevier.elsevierbookservice.controller;
 
 import com.elsevier.elsevierbookservice.payload.request.BookRequest;
+import com.elsevier.elsevierbookservice.payload.response.BookDetailResponse;
 import com.elsevier.elsevierbookservice.payload.response.BookResponse;
 import com.elsevier.elsevierbookservice.service.BookService;
 import com.elsevier.elsevierbookservice.shared.dto.BookDto;
@@ -44,9 +45,9 @@ public class BookController {
   }
 
   @GetMapping("/{id}")
-  public BookResponse getBook(@PathVariable UUID id) {
+  public BookDetailResponse getBook(@PathVariable UUID id) {
     BookDto bookDto = bookService.getBookById(id);
-    return modelMapper.map(bookDto, BookResponse.class);
+    return modelMapper.map(bookDto, BookDetailResponse.class);
   }
 
   @PostMapping
